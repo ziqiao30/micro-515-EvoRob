@@ -233,7 +233,7 @@ def run_evolution_oscillatory_controller(
             while True:
                 action = evaluation_controller.get_action(obs)
                 obs, reward, terminated, truncated, _ = evaluation_env.step(action)
-                trial_reward += reward
+                trial_reward += float(np.squeeze(reward))
 
                 if np.logical_or(terminated, truncated):
                     trial_count += 1
@@ -287,7 +287,7 @@ def evaluate_checkpoint(
 
     # --- Run evaluation episodes on the real Ant-v5 ---
     env = gym.make(
-        "Ant-v5", use_contact_forces=False, max_episode_steps=max_episode_steps
+        "Ant-v5", include_cfrc_ext_in_observation=False, max_episode_steps=max_episode_steps
     )
     rng = np.random.default_rng(seed)
     episode_rewards = []
@@ -320,7 +320,7 @@ def evaluate_checkpoint(
     print("\nRecording video...")
     video_env = gym.make(
         "Ant-v5",
-        use_contact_forces=False,
+        include_cfrc_ext_in_observation=False,
         max_episode_steps=max_episode_steps,
         render_mode="rgb_array",
     )

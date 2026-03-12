@@ -280,7 +280,7 @@ def run_evolution_neural_controller(
             while True:
                 action = evaluation_controller.get_action(obs)
                 obs, reward, terminated, truncated, _ = evaluation_env.step(action)
-                trial_reward += reward
+                trial_reward += float(np.squeeze(reward))
 
                 if np.logical_or(terminated, truncated):
                     trial_count += 1
