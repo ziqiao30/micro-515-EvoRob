@@ -1,5 +1,8 @@
 import datetime
+import multiprocessing
 import os
+os.environ.setdefault("MUJOCO_GL", "egl")
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Optional
 
@@ -12,6 +15,25 @@ from evorob.utils.filesys import get_last_checkpoint_dir
 from evorob.world.ant_world import AntFlatWorld
 from evorob.world.robot.controllers.sinoid import OscillatoryController
 
+N_WORKERS = 48
+
+# --- Parallel evaluation worker (module-level for pickling) ---
+_worker_world_osc = None
+
+def _init_worker_oscillatory():
+    """Each worker process creates one persistent MuJoCo world."""
+    global _worker_world_osc
+    os.environ.setdefault("MUJOCO_GL", "egl")
+    _worker_world_osc = AntFlatWorld(n_repeats=1)
+    _worker_world_osc.controller = OscillatoryController(output_size=_worker_world_osc.action_size)
+    _worker_world_osc.n_params = _worker_world_osc.controller.n_params
+
+def _eval_worker_oscillatory(args):
+    """Evaluate one individual using the worker's persistent world."""
+    individual, seed_offset = args
+    _worker_world_osc._eval_counter = seed_offset
+    return _worker_world_osc.evaluate_individual(individual, trial_time=50)
+
 
 def test_exercise_implementation():
     print("\n" + "=" * 60)
@@ -22,8 +44,8 @@ def test_exercise_implementation():
     print("\n[1/2] Testing Oscillatory Controller...")
     try:
         controller = OscillatoryController(output_size=8)
-        assert controller.n_params == 24, (
-            f"Should have 24 params (3*8), got {controller.n_params}"
+        assert controller.n_params == 32, (
+            f"Should have 32 params (4*8), got {controller.n_params}"
         )
 
         test_obs = np.random.randn(27)
@@ -172,33 +194,35 @@ def run_evolution_oscillatory_controller(
     # Create evolutionary algorithm with checkpointing
     num_params = world.n_params
     ea = EvoAlgAPI(
-        num_params, population_size=population_size, sigma=0.5, output_dir=ckpt_dir
+        num_params, population_size=population_size, sigma=1.0, output_dir=ckpt_dir
     )
 
-    # Evolution loop (checkpointing happens automatically in ea.tell())
-    for generation in range(num_generations):
-        # Ask EA for new population
-        population = ea.ask()
-        fitness = np.empty(len(population))
+    # Evolution loop with parallel evaluation across 48 cores
+    with ProcessPoolExecutor(
+        max_workers=N_WORKERS,
+        initializer=_init_worker_oscillatory,
+        mp_context=multiprocessing.get_context("spawn"),
+    ) as executor:
+        for generation in range(num_generations):
+            population = ea.ask()
+            # Each individual gets a unique seed offset
+            args = [
+                (ind, generation * len(population) + i)
+                for i, ind in enumerate(population)
+            ]
+            fitness = np.array(list(executor.map(_eval_worker_oscillatory, args)))
 
-        for i, individual in enumerate(population):
-            fitness[i] = world.evaluate_individual(individual)
+            save_checkpoint = (generation % ckpt_interval == 0) or (
+                generation == num_generations - 1
+            )
+            ea.tell(population, fitness, save_checkpoint=save_checkpoint)
 
-        # Tell EA the results
-        save_checkpoint = (generation % ckpt_interval == 0) or (
-            generation == num_generations - 1
-        )
-        ea.tell(population, fitness, save_checkpoint=save_checkpoint)
-
-        # Logging metrics
-        gen_best_idx = np.argmax(fitness)
-        gen_best_fitness = fitness[gen_best_idx]
-        mean_fitness = np.mean(fitness)
-        print(
-            f"Generation {generation + 1}/{num_generations}: "
-            f"Best={gen_best_fitness:.2f}, Mean={mean_fitness:.2f}, "
-            f"Overall Best={ea.f_best_so_far:.2f}"
-        )
+            gen_best_idx = np.argmax(fitness)
+            print(
+                f"Generation {generation + 1}/{num_generations}: "
+                f"Best={fitness[gen_best_idx]:.2f}, Mean={np.mean(fitness):.2f}, "
+                f"Overall Best={ea.f_best_so_far:.2f}"
+            )
 
     # Get best individual for evaluation from EA's tracking
     best_individual = ea.x_best_so_far
@@ -291,9 +315,11 @@ def evaluate_checkpoint(
     )
     rng = np.random.default_rng(seed)
     episode_rewards = []
+    episode_seeds = []
 
     for ep in range(n_episodes):
         ep_seed = int(rng.integers(0, 2**31))
+        episode_seeds.append(ep_seed)
         obs, _ = env.reset(seed=ep_seed)
         controller.reset_controller()
 
@@ -316,20 +342,22 @@ def evaluate_checkpoint(
     std_reward = float(np.std(episode_rewards))
     print(f"\nMean reward: {mean_reward:.2f} +/- {std_reward:.2f}")
 
-    # --- Record video ---
-    print("\nRecording video...")
+    # --- Record video using the best episode seed ---
+    best_ep_idx = int(np.argmax(episode_rewards))
+    best_ep_seed = episode_seeds[best_ep_idx]
+    print(f"\nRecording video of best episode (ep {best_ep_idx+1}, reward={episode_rewards[best_ep_idx]:.2f})...")
     video_env = gym.make(
         "Ant-v5",
         include_cfrc_ext_in_observation=False,
         max_episode_steps=max_episode_steps,
         render_mode="rgb_array",
     )
-    obs, _ = video_env.reset(seed=seed)
+    obs, _ = video_env.reset(seed=best_ep_seed)
     controller.reset_controller()
     frames = []
-    done = False
     video_reward = 0.0
 
+    done = False
     while not done:
         frames.append(video_env.render())
         action = controller.get_action(obs)
@@ -378,14 +406,16 @@ if __name__ == "__main__":
     test_exercise_implementation()
 
     # Uncomment to run full evolution:
-    run_evolution_oscillatory_controller(
-        num_generations=100,
-        population_size=10,
-        ckpt_interval=5,
-        checkpoint_path=None,
-        run_evaluation=True,
-        random_seed=42,
-    )
+    for seed in [42, 123, 456]:
+        run_evolution_oscillatory_controller(
+            num_generations=800,
+            population_size=400,
+            ckpt_interval=50,
+            checkpoint_path=None,
+            run_evaluation=False,
+            compute_score=True,
+            random_seed=seed,
+        )
 
     # ----------------------------------------------------------------
     # EVALUATION: Uncomment the lines below to evaluate your checkpoint

@@ -1,5 +1,8 @@
 import datetime
+import multiprocessing
 import os
+os.environ.setdefault("MUJOCO_GL", "egl")
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Optional
 
@@ -11,6 +14,21 @@ from evorob.algorithms.ea_api import EvoAlgAPI
 from evorob.utils.filesys import get_last_checkpoint_dir
 from evorob.world.ant_world import AntFlatWorld
 from evorob.world.robot.controllers.mlp import NeuralNetworkController
+
+N_WORKERS = 48
+
+# --- Parallel evaluation worker ---
+_worker_world_mlp = None
+
+def _init_worker_mlp():
+    global _worker_world_mlp
+    os.environ.setdefault("MUJOCO_GL", "egl")
+    _worker_world_mlp = AntFlatWorld(controller_cls=NeuralNetworkController, n_repeats=1)
+
+def _eval_worker_mlp(args):
+    individual, seed_offset = args
+    _worker_world_mlp._eval_counter = seed_offset
+    return _worker_world_mlp.evaluate_individual(individual)
 
 """
     Controller optimisation: Ant flat terrain
@@ -223,30 +241,33 @@ def run_evolution_neural_controller(
         num_params, population_size=population_size, sigma=0.5, output_dir=ckpt_dir
     )
 
-    # Evolution loop (checkpointing happens automatically in ea.tell())
-    for generation in range(num_generations):
-        # Ask EA for new population
-        population = ea.ask()
-        fitness = np.empty(len(population))
+    # Evolution loop with parallel evaluation across 48 cores
+    with ProcessPoolExecutor(
+        max_workers=N_WORKERS,
+        initializer=_init_worker_mlp,
+        mp_context=multiprocessing.get_context("spawn"),
+    ) as executor:
+        for generation in range(num_generations):
+            population = ea.ask()
+            args = [
+                (ind, generation * len(population) + i)
+                for i, ind in enumerate(population)
+            ]
+            fitness = np.array(list(executor.map(_eval_worker_mlp, args)))
 
-        for i, individual in enumerate(population):
-            fitness[i] = world.evaluate_individual(individual)
+            save_checkpoint = (generation % ckpt_interval == 0) or (
+                generation == num_generations - 1
+            )
+            ea.tell(population, fitness, save_checkpoint=save_checkpoint)
 
-        # Tell EA the results
-        save_checkpoint = (generation % ckpt_interval == 0) or (
-            generation == num_generations - 1
-        )
-        ea.tell(population, fitness, save_checkpoint=save_checkpoint)
-
-        # Logging metrics
-        gen_best_idx = np.argmax(fitness)
-        gen_best_fitness = fitness[gen_best_idx]
-        mean_fitness = np.mean(fitness)
-        print(
-            f"Generation {generation + 1}/{num_generations}: "
-            f"Best={gen_best_fitness:.2f}, Mean={mean_fitness:.2f}, "
-            f"Overall Best={ea.f_best_so_far:.2f}"
-        )
+            gen_best_idx = np.argmax(fitness)
+            gen_best_fitness = fitness[gen_best_idx]
+            mean_fitness = np.mean(fitness)
+            print(
+                f"Generation {generation + 1}/{num_generations}: "
+                f"Best={gen_best_fitness:.2f}, Mean={mean_fitness:.2f}, "
+                f"Overall Best={ea.f_best_so_far:.2f}"
+            )
 
     # Get best individual for evaluation from EA's tracking
     best_individual = ea.x_best_so_far
@@ -342,9 +363,11 @@ def evaluate_checkpoint(
     )
     rng = np.random.default_rng(seed)
     episode_rewards = []
+    episode_seeds = []
 
     for ep in range(n_episodes):
         ep_seed = int(rng.integers(0, 2**31))
+        episode_seeds.append(ep_seed)
         obs, _ = env.reset(seed=ep_seed)
         controller.reset_controller(batch_size=1)
 
@@ -370,18 +393,19 @@ def evaluate_checkpoint(
     std_reward = float(np.std(episode_rewards))
     print(f"\nMean reward: {mean_reward:.2f} +/- {std_reward:.2f}")
 
-    # --- Record video ---
-    print("\nRecording video...")
+    # --- Record video using the best episode seed ---
+    best_ep_idx = int(np.argmax(episode_rewards))
+    best_ep_seed = episode_seeds[best_ep_idx]
+    print(f"\nRecording video of best episode (ep {best_ep_idx+1}, reward={episode_rewards[best_ep_idx]:.2f})...")
     video_env = gym.make(
         "Ant-v5",
         include_cfrc_ext_in_observation=False,
         max_episode_steps=max_episode_steps,
         render_mode="rgb_array",
     )
-    obs, _ = video_env.reset(seed=seed)
+    obs, _ = video_env.reset(seed=best_ep_seed)
     controller.reset_controller(batch_size=1)
     frames = []
-    done = False
     video_reward = 0.0
 
     for _ in range(max_episode_steps):
@@ -391,9 +415,8 @@ def evaluate_checkpoint(
             action = action.squeeze(0)
         obs, reward, terminated, truncated, _ = video_env.step(action)
         video_reward += reward
-        done = terminated or truncated
 
-        if done:
+        if terminated or truncated:
             break
 
     video_env.close()
@@ -436,11 +459,11 @@ if __name__ == "__main__":
 
     # Uncomment to run full evolution:
     run_evolution_neural_controller(
-        num_generations=100,
-        population_size=10,
-        ckpt_interval=5,
+        num_generations=3000,
+        population_size=400,
+        ckpt_interval=10,
         checkpoint_path=None,
-        run_evaluation=True,
+        run_evaluation=False,
         compute_score=True,
         random_seed=42,
     )

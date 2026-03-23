@@ -11,8 +11,8 @@ from evorob.world.robot.controllers.mlp import NeuralNetworkController
 class AntFlatWorld(World):
     """Wrapper for the Ant environment for evolutionary optimization."""
 
-    def __init__(self, controller_cls: type[Controller] = NeuralNetworkController):
-        self.env = self.create_env()
+    def __init__(self, controller_cls: type[Controller] = NeuralNetworkController, n_repeats: int = 3):
+        self.env = self.create_env(n_repeats=n_repeats)
         self.dt = self.env.envs[0].unwrapped.dt
         self.action_size = self.env.action_space.shape[1]
         self.obs_size = self.env.observation_space.shape[1]
