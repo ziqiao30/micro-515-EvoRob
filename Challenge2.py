@@ -2,6 +2,7 @@ import os
 
 os.environ.setdefault("MUJOCO_GL", "egl")
 
+from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple
@@ -16,6 +17,21 @@ from evorob.world.ant_multi_world import AntMultiWorld
 from evorob.world.ant_world import AntFlatWorld
 from evorob.world.envs.ant_flat import AntFlatEnvironment
 from evorob.world.robot.controllers.mlp import NeuralNetworkController
+
+# ---------------------------------------------------------------------------
+# Parallel evaluation workers
+# ---------------------------------------------------------------------------
+
+_worker_world = None
+
+
+def _init_worker_multi(n_repeats):
+    global _worker_world
+    _worker_world = AntMultiWorld(controller_cls=NeuralNetworkController, n_repeats=n_repeats)
+
+
+def _eval_worker_multi(individual):
+    return _worker_world.evaluate_individual(individual)
 
 """
     Multi-objective optimisation: Ant two-terrains
@@ -651,12 +667,17 @@ def run_evolution_nsga(
     print("=" * 70 + "\n")
 
     # Evolution loop
-    for generation in range(num_generations):
+    n_workers = min(48, population_size)
+    with ProcessPoolExecutor(
+        max_workers=n_workers,
+        initializer=_init_worker_multi,
+        initargs=(n_repeats,),
+    ) as executor:
+      for generation in range(num_generations):
         population = nsga.ask()
-        multi_fitness = np.empty((len(population), 2))
 
-        for i, individual in enumerate(population):
-            multi_fitness[i] = world.evaluate_individual(individual)
+        results = list(executor.map(_eval_worker_multi, population))
+        multi_fitness = np.array(results)
 
         save_checkpoint = (
             (generation % ckpt_interval == 0) or (generation == num_generations - 1)
@@ -809,17 +830,17 @@ if __name__ == "__main__":
 
     # Uncomment to run full NSGA-II evolution:
     run_evolution_nsga(
-        num_generations=100,
-        population_size=10,
+        num_generations=500,
+        population_size=200,
         run_evaluation=False,
         compute_score=True,
         random_seed=42,
-        n_repeats=2,
-        mutation_prob=0.3,
+        n_repeats=8,
+        mutation_prob=0.5,
         crossover_prob=0.5,
-        bounds=(-1, 1),
-        n_parents=10,
-        ckpt_interval=5,
+        bounds=(-4, 4),
+        n_parents=200,
+        ckpt_interval=10,
         checkpoint_path=None,
     )
 
