@@ -17,7 +17,11 @@ class AntFlatEnvironment(MujocoEnv):
     }
 
     def __init__(
-        self, render_mode=None, robot_path: str = "ant_flat_terrain.xml", **kwargs
+        self, render_mode=None, robot_path: str = "ant_flat_terrain.xml",
+        forward_reward_weight: float = 4.0,
+        healthy_reward_weight: float = 1.0,
+        ctrl_cost_weight: float = 0.1,
+        **kwargs
     ):
         # Load MuJoCo environment in Gymnasium
         # Get path to XML file relative to this module
@@ -46,6 +50,10 @@ class AntFlatEnvironment(MujocoEnv):
         }
 
         self._reset_noise_scale: float = 0.1
+        self._forward_reward_weight = forward_reward_weight
+        self._healthy_reward_weight = healthy_reward_weight
+        self._ctrl_cost_weight = ctrl_cost_weight
+        self._prev_action = None
 
         # Define observation space.
         # Action space is automatically defined by MuJoCo.
@@ -68,6 +76,7 @@ class AntFlatEnvironment(MujocoEnv):
         )
         self.set_state(qpos, qvel)
 
+        self._prev_action = None
         observation = self._get_obs()
 
         return observation
@@ -83,6 +92,25 @@ class AntFlatEnvironment(MujocoEnv):
 
         observation = self._get_obs()
         reward, reward_info = self._get_rew(x_velocity, action)
+
+        # Action rate penalty
+        if self._prev_action is not None:
+            action_rate_cost = 0.01 * np.sum(np.square(action - self._prev_action))
+            reward -= action_rate_cost
+            reward_info["action_rate_cost"] = action_rate_cost
+        self._prev_action = action.copy()
+
+        # Lateral velocity penalty
+        lateral_cost = 0.5 * y_velocity ** 2
+        reward -= lateral_cost
+        reward_info["lateral_cost"] = lateral_cost
+
+        # Orientation penalty
+        quat = self.data.qpos[3:7]
+        orientation_cost = 1.0 * (quat[1] ** 2 + quat[2] ** 2)
+        reward -= orientation_cost
+        reward_info["orientation_cost"] = orientation_cost
+
         terminated = self._get_termination()
         info = {
             "x_position": self.data.qpos[0],
@@ -113,9 +141,9 @@ class AntFlatEnvironment(MujocoEnv):
         # 3. ctrl_cost = ctrl_cost_weight * sum of squared actions (weight=0.5)
         # Final reward = forward_reward + healthy_reward - ctrl_cost
         # Return: (reward, reward_info_dict)
-        forward_reward = 1.0 * x_velocity
-        healthy_reward = 1.0
-        ctrl_cost = 0.5 * np.sum(np.square(action))
+        forward_reward = self._forward_reward_weight * x_velocity
+        healthy_reward = self._healthy_reward_weight
+        ctrl_cost = self._ctrl_cost_weight * np.sum(np.square(action))
         reward = forward_reward + healthy_reward - ctrl_cost
         reward_info = {
             "forward_reward": forward_reward,

@@ -31,7 +31,7 @@ def _init_worker_multi(n_repeats):
 
 
 def _eval_worker_multi(individual):
-    return _worker_world.evaluate_individual(individual)
+    return _worker_world.evaluate_individual(individual, trial_time=50)
 
 """
     Multi-objective optimisation: Ant two-terrains
@@ -830,16 +830,16 @@ if __name__ == "__main__":
 
     # Uncomment to run full NSGA-II evolution:
     run_evolution_nsga(
-        num_generations=500,
-        population_size=200,
+        num_generations=300,
+        population_size=300,
         run_evaluation=False,
         compute_score=True,
-        random_seed=42,
-        n_repeats=8,
+        random_seed=123,
+        n_repeats=10,
         mutation_prob=0.5,
-        crossover_prob=0.5,
-        bounds=(-4, 4),
-        n_parents=200,
+        crossover_prob=0.9,
+        bounds=(-3, 3),
+        n_parents=300,
         ckpt_interval=10,
         checkpoint_path=None,
     )
