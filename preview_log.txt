@@ -1,0 +1,13 @@
+label                     idx                    train f
+specialist_forward         55 [934.45604511 -13.02952977]
+specialist_efficiency      82 [ 5.07499016e+02 -3.84363778e-02]
+generalist                 61 [723.77535855  -2.88494445]
+
+specialist_forward         55     1381.1     -23.57       65.7    378.3
+  Video saved: /home/ziqiao/micro-515-EvoRob/preview_videos/video_specialist_forward.mp4
+specialist_efficiency      82     1006.4      -0.05      956.2     14.0
+  Video saved: /home/ziqiao/micro-515-EvoRob/preview_videos/video_specialist_efficiency.mp4
+generalist                 61     1349.2      -5.09      857.6    109.6
+  Video saved: /home/ziqiao/micro-515-EvoRob/preview_videos/video_generalist.mp4
+
+Summary and videos in: /home/ziqiao/micro-515-EvoRob/preview_videos

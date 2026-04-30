@@ -1,0 +1,38 @@
+Seed idx 28, training f = [937.52494185  -8.35217668]
+n_params = 288, sigma0 = 0.12
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 288 (seed=1, Thu Apr 23 10:18:23 2026)
+Gen   0  best=  1333.6  mean=  1149.0  best_so_far=  1333.6  sigma=0.117  elapsed=0.5min
+Gen   1  best=  1335.1  mean=  1142.5  best_so_far=  1335.1  sigma=0.115  elapsed=0.9min
+Gen   2  best=  1339.3  mean=  1170.3  best_so_far=  1339.3  sigma=0.112  elapsed=1.3min
+Gen   3  best=  1396.6  mean=  1200.8  best_so_far=  1396.6  sigma=0.111  elapsed=1.8min
+Gen   4  best=  1337.2  mean=  1192.2  best_so_far=  1396.6  sigma=0.109  elapsed=2.2min
+Gen   5  best=  1416.1  mean=  1192.3  best_so_far=  1416.1  sigma=0.108  elapsed=2.6min
+Gen   6  best=  1348.9  mean=  1192.7  best_so_far=  1416.1  sigma=0.106  elapsed=3.0min
+Gen   7  best=  1366.0  mean=  1176.0  best_so_far=  1416.1  sigma=0.105  elapsed=3.4min
+Gen   8  best=  1354.4  mean=  1178.5  best_so_far=  1416.1  sigma=0.104  elapsed=3.9min
+Gen   9  best=  1342.3  mean=  1166.4  best_so_far=  1416.1  sigma=0.103  elapsed=4.3min
+Gen  10  best=  1410.1  mean=  1173.8  best_so_far=  1416.1  sigma=0.102  elapsed=4.7min
+Gen  11  best=  1364.6  mean=  1165.6  best_so_far=  1416.1  sigma=0.102  elapsed=5.1min
+Gen  12  best=  1316.3  mean=  1135.7  best_so_far=  1416.1  sigma=0.101  elapsed=5.4min
+Gen  13  best=  1367.2  mean=  1180.8  best_so_far=  1416.1  sigma=0.100  elapsed=5.9min
+Gen  14  best=  1418.8  mean=  1230.2  best_so_far=  1418.8  sigma=0.100  elapsed=6.3min
+Gen  15  best=  1396.6  mean=  1182.8  best_so_far=  1418.8  sigma=0.099  elapsed=6.7min
+Gen  16  best=  1376.5  mean=  1193.0  best_so_far=  1418.8  sigma=0.099  elapsed=7.1min
+Gen  17  best=  1389.7  mean=  1209.8  best_so_far=  1418.8  sigma=0.098  elapsed=7.5min
+Gen  18  best=  1414.5  mean=  1237.5  best_so_far=  1418.8  sigma=0.098  elapsed=7.8min
+Gen  19  best=  1367.1  mean=  1237.5  best_so_far=  1418.8  sigma=0.097  elapsed=8.3min
+Gen  20  best=  1434.8  mean=  1228.9  best_so_far=  1434.8  sigma=0.097  elapsed=8.7min
+Gen  21  best=  1383.4  mean=  1227.6  best_so_far=  1434.8  sigma=0.097  elapsed=9.1min
+Gen  22  best=  1440.0  mean=  1221.1  best_so_far=  1440.0  sigma=0.097  elapsed=9.5min
+Gen  23  best=  1391.9  mean=  1232.3  best_so_far=  1440.0  sigma=0.096  elapsed=9.9min
+Gen  24  best=  1381.8  mean=  1233.3  best_so_far=  1440.0  sigma=0.096  elapsed=10.3min
+Gen  25  best=  1434.5  mean=  1259.0  best_so_far=  1440.0  sigma=0.096  elapsed=10.7min
+Gen  26  best=  1412.0  mean=  1236.0  best_so_far=  1440.0  sigma=0.096  elapsed=11.1min
+Gen  27  best=  1441.1  mean=  1228.1  best_so_far=  1441.1  sigma=0.095  elapsed=11.5min
+Gen  28  best=  1397.6  mean=  1257.9  best_so_far=  1441.1  sigma=0.095  elapsed=11.8min
+Gen  29  best=  1385.1  mean=  1246.7  best_so_far=  1441.1  sigma=0.095  elapsed=12.2min
+Gen  30  best=  1437.1  mean=  1231.8  best_so_far=  1441.1  sigma=0.094  elapsed=12.7min
+Gen  31  best=  1381.1  mean=  1223.3  best_so_far=  1441.1  sigma=0.094  elapsed=13.1min
+Gen  32  best=  1415.6  mean=  1237.6  best_so_far=  1441.1  sigma=0.094  elapsed=13.5min
+Gen  33  best=  1372.7  mean=  1261.0  best_so_far=  1441.1  sigma=0.093  elapsed=14.0min
+Gen  34  best=  1421.2  mean=  1284.9  best_so_far=  1441.1  sigma=0.093  elapsed=14.5min

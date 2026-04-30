@@ -1,0 +1,177 @@
+Warm-start enabled: seeding Phase 1 with 150 genotypes from /home/ziqiao/micro-515-EvoRob/results/AntHill-v0/multi_nsga200_baseline/199
+
+======================================================================
+Phase 'easy':  slope=1.0°  bump=0.03  sigma=3.0  n_steps=500  gens=20
+======================================================================
+  Warm-starting from 150 seed individuals — re-evaluating on new terrain...
+  Re-eval complete in 36.8s. Seed obj1: min=362.9 mean=620.5 max=1174.0
+Generation 0:	[1173.97426156  -19.60226215]
+Mean fitness:	308.99 +- 326.28
+Mean fitness per obj: ['620.54 +-137.04', '-2.56 +-3.69']
+  [easy] gen 1/20  best obj1 so far: 1174.0  mean obj1: 587.9  (35.0s)
+  [easy] gen 2/20  best obj1 so far: 1174.0  mean obj1: 596.6  (35.2s)
+  [easy] gen 3/20  best obj1 so far: 1174.0  mean obj1: 614.2  (35.1s)
+  [easy] gen 4/20  best obj1 so far: 1174.0  mean obj1: 614.1  (35.3s)
+Generation 5:	[1173.97426156  -19.60226215]
+Mean fitness:	301.16 +- 316.36
+Mean fitness per obj: ['605.20 +-123.56', '-2.88 +-4.04']
+  [easy] gen 5/20  best obj1 so far: 1174.0  mean obj1: 605.2  (34.5s)
+  [easy] gen 6/20  best obj1 so far: 1174.0  mean obj1: 600.1  (34.3s)
+  [easy] gen 7/20  best obj1 so far: 1174.0  mean obj1: 587.9  (35.7s)
+  [easy] gen 8/20  best obj1 so far: 1174.0  mean obj1: 606.2  (35.9s)
+  [easy] gen 9/20  best obj1 so far: 1174.0  mean obj1: 603.7  (35.3s)
+Generation 10:	[1173.97426156  -19.60226215]
+Mean fitness:	309.27 +- 331.42
+Mean fitness per obj: ['621.42 +-157.41', '-2.89 +-3.99']
+  [easy] gen 10/20  best obj1 so far: 1174.0  mean obj1: 621.4  (35.0s)
+  [easy] gen 11/20  best obj1 so far: 1174.0  mean obj1: 594.0  (34.3s)
+  [easy] gen 12/20  best obj1 so far: 1174.0  mean obj1: 608.7  (36.6s)
+  [easy] gen 13/20  best obj1 so far: 1174.0  mean obj1: 604.8  (35.7s)
+  [easy] gen 14/20  best obj1 so far: 1174.0  mean obj1: 599.6  (34.8s)
+Generation 15:	[1173.97426156  -19.60226215]
+Mean fitness:	305.82 +- 325.86
+Mean fitness per obj: ['614.38 +-148.11', '-2.75 +-3.70']
+  [easy] gen 15/20  best obj1 so far: 1174.0  mean obj1: 614.4  (35.4s)
+  [easy] gen 16/20  best obj1 so far: 1174.0  mean obj1: 631.9  (35.6s)
+  [easy] gen 17/20  best obj1 so far: 1174.0  mean obj1: 624.3  (35.9s)
+  [easy] gen 18/20  best obj1 so far: 1178.0  mean obj1: 601.5  (37.8s)
+  [easy] gen 19/20  best obj1 so far: 1178.0  mean obj1: 602.9  (35.8s)
+Generation 20:	[1178.02046979  -17.68650157]
+Mean fitness:	304.98 +- 320.94
+Mean fitness per obj: ['612.46 +-129.99', '-2.51 +-3.28']
+  [easy] gen 20/20  best obj1 so far: 1178.0  mean obj1: 612.5  (37.9s)
+
+======================================================================
+Phase 'medium':  slope=3.0°  bump=0.07  sigma=3.0  n_steps=500  gens=25
+======================================================================
+  Warm-starting from 150 seed individuals — re-evaluating on new terrain...
+  Re-eval complete in 37.9s. Seed obj1: min=499.0 mean=637.4 max=1024.0
+Generation 0:	[1023.98238484  -15.61129618]
+Mean fitness:	317.47 +- 331.84
+Mean fitness per obj: ['637.43 +-124.42', '-2.49 +-3.53']
+  [medium] gen 1/25  best obj1 so far: 1024.0  mean obj1: 565.3  (35.1s)
+  [medium] gen 2/25  best obj1 so far: 1024.0  mean obj1: 585.5  (36.3s)
+  [medium] gen 3/25  best obj1 so far: 1024.0  mean obj1: 582.3  (37.0s)
+  [medium] gen 4/25  best obj1 so far: 1024.0  mean obj1: 578.8  (38.4s)
+Generation 5:	[1023.98238484  -15.61129618]
+Mean fitness:	283.52 +- 292.95
+Mean fitness per obj: ['568.90 +-93.50', '-1.87 +-2.66']
+  [medium] gen 5/25  best obj1 so far: 1024.0  mean obj1: 568.9  (35.1s)
+  [medium] gen 6/25  best obj1 so far: 1024.0  mean obj1: 602.2  (36.8s)
+  [medium] gen 7/25  best obj1 so far: 1024.0  mean obj1: 601.3  (38.5s)
+  [medium] gen 8/25  best obj1 so far: 1024.0  mean obj1: 584.3  (37.8s)
+  [medium] gen 9/25  best obj1 so far: 1024.0  mean obj1: 587.7  (36.6s)
+Generation 10:	[1023.98238484  -15.61129618]
+Mean fitness:	283.79 +- 294.93
+Mean fitness per obj: ['569.37 +-104.11', '-1.80 +-2.55']
+  [medium] gen 10/25  best obj1 so far: 1024.0  mean obj1: 569.4  (35.4s)
+  [medium] gen 11/25  best obj1 so far: 1039.7  mean obj1: 609.5  (36.9s)
+  [medium] gen 12/25  best obj1 so far: 1039.7  mean obj1: 603.5  (36.8s)
+  [medium] gen 13/25  best obj1 so far: 1039.7  mean obj1: 587.6  (36.2s)
+  [medium] gen 14/25  best obj1 so far: 1039.7  mean obj1: 593.7  (34.6s)
+Generation 15:	[1039.73299299  -14.60668667]
+Mean fitness:	299.87 +- 314.01
+Mean fitness per obj: ['602.13 +-120.29', '-2.39 +-3.38']
+  [medium] gen 15/25  best obj1 so far: 1039.7  mean obj1: 602.1  (36.5s)
+  [medium] gen 16/25  best obj1 so far: 1039.7  mean obj1: 575.1  (36.3s)
+  [medium] gen 17/25  best obj1 so far: 1039.7  mean obj1: 583.6  (37.2s)
+  [medium] gen 18/25  best obj1 so far: 1039.7  mean obj1: 590.9  (38.2s)
+  [medium] gen 19/25  best obj1 so far: 1039.7  mean obj1: 587.4  (38.4s)
+Generation 20:	[1039.73299299  -14.60668667]
+Mean fitness:	300.72 +- 315.19
+Mean fitness per obj: ['604.75 +-117.45', '-3.31 +-4.23']
+  [medium] gen 20/25  best obj1 so far: 1039.7  mean obj1: 604.8  (37.4s)
+  [medium] gen 21/25  best obj1 so far: 1039.7  mean obj1: 601.2  (37.7s)
+  [medium] gen 22/25  best obj1 so far: 1039.7  mean obj1: 602.7  (36.3s)
+  [medium] gen 23/25  best obj1 so far: 1039.7  mean obj1: 584.7  (35.6s)
+  [medium] gen 24/25  best obj1 so far: 1039.7  mean obj1: 602.6  (37.0s)
+Generation 25:	[1039.73299299  -14.60668667]
+Mean fitness:	285.88 +- 296.51
+Mean fitness per obj: ['573.52 +-101.76', '-1.75 +-2.87']
+  [medium] gen 25/25  best obj1 so far: 1039.7  mean obj1: 573.5  (36.2s)
+
+======================================================================
+Phase 'target':  slope=5.0°  bump=0.1  sigma=3.0  n_steps=750  gens=45
+======================================================================
+  Warm-starting from 150 seed individuals — re-evaluating on new terrain...
+  Re-eval complete in 58.3s. Seed obj1: min=585.0 mean=905.7 max=1311.1
+Generation 0:	[1311.10294988  -12.96368047]
+Mean fitness:	451.02 +- 464.83
+Mean fitness per obj: ['905.71 +-136.49', '-3.66 +-5.16']
+  [target] gen 1/45  best obj1 so far: 1311.1  mean obj1: 824.0  (51.7s)
+  [target] gen 2/45  best obj1 so far: 1311.1  mean obj1: 819.8  (51.6s)
+  [target] gen 3/45  best obj1 so far: 1311.1  mean obj1: 845.8  (54.7s)
+  [target] gen 4/45  best obj1 so far: 1311.1  mean obj1: 822.1  (52.4s)
+Generation 5:	[1311.10294988  -12.96368047]
+Mean fitness:	428.93 +- 442.08
+Mean fitness per obj: ['860.66 +-134.44', '-2.81 +-3.62']
+  [target] gen 5/45  best obj1 so far: 1311.1  mean obj1: 860.7  (56.4s)
+  [target] gen 6/45  best obj1 so far: 1311.1  mean obj1: 860.0  (56.2s)
+  [target] gen 7/45  best obj1 so far: 1311.1  mean obj1: 850.9  (54.9s)
+  [target] gen 8/45  best obj1 so far: 1311.1  mean obj1: 842.2  (54.8s)
+  [target] gen 9/45  best obj1 so far: 1311.1  mean obj1: 844.2  (55.6s)
+Generation 10:	[1311.10294988  -12.96368047]
+Mean fitness:	418.48 +- 429.78
+Mean fitness per obj: ['839.62 +-121.24', '-2.65 +-3.35']
+  [target] gen 10/45  best obj1 so far: 1311.1  mean obj1: 839.6  (53.3s)
+  [target] gen 11/45  best obj1 so far: 1311.1  mean obj1: 823.0  (51.3s)
+  [target] gen 12/45  best obj1 so far: 1311.1  mean obj1: 849.2  (55.1s)
+  [target] gen 13/45  best obj1 so far: 1311.1  mean obj1: 832.7  (53.6s)
+  [target] gen 14/45  best obj1 so far: 1311.1  mean obj1: 808.6  (51.5s)
+Generation 15:	[1311.10294988  -12.96368047]
+Mean fitness:	421.66 +- 432.33
+Mean fitness per obj: ['845.92 +-117.56', '-2.59 +-3.86']
+  [target] gen 15/45  best obj1 so far: 1311.1  mean obj1: 845.9  (53.2s)
+  [target] gen 16/45  best obj1 so far: 1311.1  mean obj1: 844.5  (54.2s)
+  [target] gen 17/45  best obj1 so far: 1311.1  mean obj1: 848.7  (52.1s)
+  [target] gen 18/45  best obj1 so far: 1311.1  mean obj1: 854.6  (54.7s)
+  [target] gen 19/45  best obj1 so far: 1311.1  mean obj1: 845.1  (54.2s)
+Generation 20:	[1311.10294988  -12.96368047]
+Mean fitness:	420.69 +- 431.81
+Mean fitness per obj: ['844.19 +-119.20', '-2.80 +-4.40']
+  [target] gen 20/45  best obj1 so far: 1311.1  mean obj1: 844.2  (53.6s)
+  [target] gen 21/45  best obj1 so far: 1311.1  mean obj1: 827.1  (54.9s)
+  [target] gen 22/45  best obj1 so far: 1311.1  mean obj1: 859.0  (54.1s)
+  [target] gen 23/45  best obj1 so far: 1311.1  mean obj1: 842.7  (52.9s)
+  [target] gen 24/45  best obj1 so far: 1311.1  mean obj1: 845.5  (57.3s)
+Generation 25:	[1311.10294988  -12.96368047]
+Mean fitness:	410.81 +- 420.85
+Mean fitness per obj: ['823.91 +-113.62', '-2.30 +-2.98']
+  [target] gen 25/45  best obj1 so far: 1311.1  mean obj1: 823.9  (53.9s)
+  [target] gen 26/45  best obj1 so far: 1311.1  mean obj1: 834.1  (55.7s)
+  [target] gen 27/45  best obj1 so far: 1311.1  mean obj1: 823.9  (52.1s)
+  [target] gen 28/45  best obj1 so far: 1311.1  mean obj1: 846.4  (53.8s)
+  [target] gen 29/45  best obj1 so far: 1311.1  mean obj1: 863.3  (55.1s)
+Generation 30:	[1311.10294988  -12.96368047]
+Mean fitness:	427.10 +- 438.38
+Mean fitness per obj: ['857.06 +-120.79', '-2.87 +-3.78']
+  [target] gen 30/45  best obj1 so far: 1311.1  mean obj1: 857.1  (54.3s)
+  [target] gen 31/45  best obj1 so far: 1311.1  mean obj1: 848.9  (53.7s)
+  [target] gen 32/45  best obj1 so far: 1311.1  mean obj1: 852.8  (52.3s)
+  [target] gen 33/45  best obj1 so far: 1311.1  mean obj1: 849.3  (52.6s)
+  [target] gen 34/45  best obj1 so far: 1311.1  mean obj1: 840.0  (53.1s)
+Generation 35:	[1311.10294988  -12.96368047]
+Mean fitness:	422.75 +- 434.94
+Mean fitness per obj: ['848.28 +-127.19', '-2.77 +-3.48']
+  [target] gen 35/45  best obj1 so far: 1311.1  mean obj1: 848.3  (55.5s)
+  [target] gen 36/45  best obj1 so far: 1311.1  mean obj1: 858.2  (52.8s)
+  [target] gen 37/45  best obj1 so far: 1311.1  mean obj1: 862.7  (56.2s)
+  [target] gen 38/45  best obj1 so far: 1311.1  mean obj1: 844.7  (52.6s)
+  [target] gen 39/45  best obj1 so far: 1311.1  mean obj1: 856.7  (55.5s)
+Generation 40:	[1311.10294988  -12.96368047]
+Mean fitness:	418.15 +- 429.35
+Mean fitness per obj: ['838.74 +-122.01', '-2.43 +-3.44']
+  [target] gen 40/45  best obj1 so far: 1311.1  mean obj1: 838.7  (51.6s)
+  [target] gen 41/45  best obj1 so far: 1311.1  mean obj1: 853.3  (54.9s)
+  [target] gen 42/45  best obj1 so far: 1311.1  mean obj1: 821.7  (52.4s)
+  [target] gen 43/45  best obj1 so far: 1311.1  mean obj1: 864.8  (55.9s)
+  [target] gen 44/45  best obj1 so far: 1311.1  mean obj1: 859.1  (53.5s)
+Generation 45:	[1311.10294988  -12.96368047]
+Mean fitness:	416.81 +- 431.75
+Mean fitness per obj: ['837.01 +-140.19', '-3.39 +-4.70']
+  [target] gen 45/45  best obj1 so far: 1311.1  mean obj1: 837.0  (53.4s)
+
+Copying final phase checkpoint to /home/ziqiao/micro-515-EvoRob/results/AntHill-v0/multi ...
+
+Curriculum training complete in 69.8 min.
+Final checkpoint: /home/ziqiao/micro-515-EvoRob/results/AntHill-v0/multi

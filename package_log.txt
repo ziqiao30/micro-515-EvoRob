@@ -1,0 +1,66 @@
+Loaded: pop=(153, 288), fit=(153, 2), last_gen=/home/ziqiao/micro-515-EvoRob/results/AntHill-v0/multi/50
+  spec1 idx=152, f=[879.71240342 -15.81081213]
+  spec2 idx=34, f=[ 7.54806225e+02 -5.07228923e-02]
+  gener idx=44,  f=[863.23146453  -6.67779326]
+  Pareto plot saved: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/pareto_front.pdf
+  Morphology plot saved: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/morphology_comparison.pdf
+  Loaded baseline training history: (200, 150, 2)
+  Training curve saved: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/training_curve.pdf
+  Saved submission x_best.npy (generalist): /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/x_best.npy
+  Saved final population (x.npy (153, 288)) and fitness (f.npy (153, 2))
+  Copied Challenge3.py -> /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/Challenge3.py
+  Copied evorob/world/envs/ant_hill.py -> /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/ant_hill.py
+  Copied evorob/world/robot/controllers/mlp.py -> /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/mlp.py
+  Copied evorob/algorithms/nsga.py -> /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/nsga.py
+  Morphology table saved: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/morphology_table.txt
+Loaded x_best  (shape: (288,))
+Specialist obj1 (forward): idx=152  f=[879.71240342 -15.81081213]
+Specialist obj2 (effic.) : idx=34  f=[ 7.54806225e+02 -5.07228923e-02]
+Generalist (Pareto knee) : idx=44    f=[863.23146453  -6.67779326]
+Controller: NeuralNetworkController  |  params=280  |  genotype size=288
+
+Evaluating specialist_obj1 (256 episodes)...
+  reward: 193.02 +/- 242.13  obj1: 1224.31  obj2: -19.26
+Evaluating specialist_obj2 (256 episodes)...
+  reward: 957.14 +/- 15.19  obj1: 1005.84  obj2: -0.06
+Evaluating generalist (256 episodes)...
+  reward: 483.00 +/- 142.66  obj1: 1098.75  obj2: -7.83
+  Video saved: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/evaluation_output/evaluation_specialist_forward.mp4
+  Video saved: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/evaluation_output/evaluation_specialist_efficiency.mp4
+  Video saved: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/evaluation_output/evaluation_generalist.mp4
+
+Score saved to: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/evaluation_output/evaluation_score.txt
+============================================================
+  specialist_obj1       : reward=193.02 +/-242.13  obj1=1224.31  obj2=-19.26
+  specialist_obj2       : reward=957.14 +/-15.19  obj1=1005.84  obj2=-0.06
+  generalist            : reward=483.00 +/-142.66  obj1=1098.75  obj2=-7.83
+============================================================
+README written: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/README.md
+Word count: 290 (limit 300)
+
+$ python analyze_challenge3.py --checkpoint-dir /home/ziqiao/micro-515-EvoRob/results/AntHill-v0/multi --output-dir /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3
+
+$ python -c from Challenge3 import evaluate_checkpoint; evaluate_checkpoint(checkpoint_dir='/home/ziqiao/micro-515-EvoRob/results/AntHill-v0/multi', output_dir='/home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/evaluation_output', n_episodes=256)
+
+$ python write_readme.py --submission-dir /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3 --eval-dir /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3/evaluation_output --n-gen 200 --n-pop 153 --n-repeats 4
+
+Final submission contents:
+  Challenge3.py                             24.6 KB
+  README.md                                 1.8 KB
+  ant_hill.py                               8.3 KB
+  evaluation_generalist.mp4                 1963.6 KB
+  evaluation_score.txt                      20.8 KB
+  evaluation_specialist_efficiency.mp4      658.0 KB
+  evaluation_specialist_forward.mp4         2609.3 KB
+  f.npy                                     2.5 KB
+  mlp.py                                    3.8 KB
+  morphology_comparison.pdf                 17.1 KB
+  morphology_table.txt                      0.5 KB
+  nsga.py                                   19.8 KB
+  pareto_front.pdf                          22.4 KB
+  training_curve.pdf                        28.2 KB
+  x.npy                                     344.4 KB
+  x_best.npy                                2.4 KB
+  x_best_spec_efficiency.npy                2.4 KB
+  x_best_spec_forward.npy                   2.4 KB
+Zip written: /home/ziqiao/micro-515-EvoRob/2026_micro_515_322816_groupW_Wang_challenge3.zip

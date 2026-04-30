@@ -1,0 +1,8 @@
+Preview Summary — Challenge 3
+==================================================
+8 episodes × 1000 steps per individual
+
+individual                idx  eval_obj1  eval_obj2     reward      std
+specialist_forward         55     1381.1     -23.57       65.7    378.3
+specialist_efficiency      82     1006.4      -0.05      956.2     14.0
+generalist                 61     1349.2      -5.09      857.6    109.6
